@@ -1,0 +1,53 @@
+name: drotest
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  flutter_bloc: ^8.0.1
+  flutter_screenutil: ^5.1.1
+  flutter_svg: ^1.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^1.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/
+  fonts:
+    - family: Proxima
+      fonts:
+        - asset: fonts/ProximaNova-Regular.otf
+        - asset: fonts/Proxima Nova Thin.otf
+          weight: 100
+        - asset: fonts/Proxima Nova Semibold.otf
+          weight: 400
+        - asset: fonts/Proxima Nova Extrabold.otf
+          weight: 700
+        - asset: fonts/Proxima Nova Bold.otf
+          weight: 500
+        - asset: fonts/Proxima Nova Black.otf
+          weight: 300
+        - asset: fonts/Proxima Nova Alt Thin.otf
+          weight: 200
+        - asset: fonts/Proxima Nova Alt Light.otf
+          style: italic
+        - asset: fonts/Proxima Nova Alt Bold.otf
+          weight: 600
