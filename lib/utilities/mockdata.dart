@@ -1,5 +1,5 @@
 class MockData {
-  static List<Map> categories = [
+  static const List<Map> categories = [
     {"title": "Headache", "imageUrl": "assets/headache.jpg"},
     {"title": "Infant", "imageUrl": "assets/infant.jpg"},
     {"title": "Supplement", "imageUrl": "assets/supplement.jpg"},
@@ -7,7 +7,7 @@ class MockData {
     {"title": "Supplement", "imageUrl": "assets/supplement.jpg"},
   ];
 
-  static List<Map> drugs = [
+  static const List<Map> drugs = [
     {
       'Price': 1000,
       'Name': 'Realflex',

@@ -1,14 +1,13 @@
 import 'package:drotest/utilities/utilities.dart';
 import 'package:drotest/view/product/product_view.dart';
-import 'package:drotest/view/shared/custom_tap_detector.dart';
 import 'package:drotest/view/shared/shared.dart';
+import 'package:drotest/view/store/models/item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DrugCard extends StatelessWidget {
-  const DrugCard({
-    Key? key,
-  }) : super(key: key);
+  const DrugCard({Key? key, required this.drug}) : super(key: key);
+  final Item drug;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,7 +34,7 @@ class DrugCard extends StatelessWidget {
                 width: 168.w,
                 color: DroColors.lightGrey,
                 alignment: Alignment.center,
-                child: Image.asset('assets/medicine1.png', fit: BoxFit.contain),
+                child: Image.asset(drug.imageUrl, fit: BoxFit.contain),
               ),
             ),
             const YSpace(13),
@@ -44,12 +43,13 @@ class DrugCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  CustomText('Panadol', size: 16, color: DroColors.darkGrey),
-                  YSpace(2),
-                  CustomText('Analgesic', size: 14, color: Colors.grey),
-                  YSpace(9),
-                  CustomText('₦5000.00', size: 18, weight: FontWeight.bold),
+                children: [
+                  CustomText(drug.name, size: 16, color: DroColors.darkGrey),
+                  const YSpace(2),
+                  CustomText(drug.type, size: 14, color: Colors.grey),
+                  const YSpace(9),
+                  CustomText('₦${drug.price}.00',
+                      size: 18, weight: FontWeight.bold),
                 ],
               ),
             )

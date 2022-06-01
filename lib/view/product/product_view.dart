@@ -3,7 +3,6 @@ import 'package:drotest/view/cart/cart_view.dart';
 import 'package:drotest/view/product/widget/widget.dart';
 import 'package:drotest/view/shared/custom_flat_button.dart';
 import 'package:drotest/view/shared/shared.dart';
-import 'package:drotest/view/store/widgets/drug_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -67,7 +66,7 @@ class _ProductViewState extends State<ProductView> {
                           child: SizedBox(
                             height: 206.h,
                             width: 155.w,
-                            child: const DrugCard(),
+                            // child: const DrugCard(),
                           ),
                         );
                       },
