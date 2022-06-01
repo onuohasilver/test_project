@@ -5,7 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CategoryCard extends StatelessWidget {
   const CategoryCard({
     Key? key,
+    required this.data,
   }) : super(key: key);
+  final Map data;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,15 +23,15 @@ class CategoryCard extends StatelessWidget {
           child: Stack(
             children: [
               Center(
-                child: Image.asset('assets/medicine1.png',
+                child: Image.asset(data['imageUrl'],
                     fit: BoxFit.cover, height: 99.h, width: 126.w),
               ),
               Material(
                 color: Colors.black54,
                 child: InkWell(
-                    child: const Center(
+                    child: Center(
                       child: CustomText(
-                        'Panadol',
+                        data['title'],
                         size: 14.46,
                         color: Colors.white,
                         weight: FontWeight.bold,

@@ -59,13 +59,14 @@ class _StoreViewState extends State<StoreView> {
               child: BlocBuilder<CatalogBloc, CatalogState>(
                   builder: (context, state) {
                 if (state is CatalogLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                      child: CircularProgressIndicator(
+                          strokeWidth: 2, color: DroColors.purple));
                 }
                 if (state is CatalogLoaded) {
-                  print(state.catalog.items);
                   return DrugCardLists(
                     scrollController: _scrollController,
-                    listOfDrugs: state.catalog.getByName(''),
+                    listOfDrugs: state.catalog.allItems(),
                   );
                 }
                 return const NotFound();

@@ -2,9 +2,9 @@ import 'package:drotest/view/store/models/item_model.dart';
 import 'package:equatable/equatable.dart';
 
 class Catalog extends Equatable {
-  const Catalog({required this.items});
+  const Catalog({required this.items, required this.categories});
 
-  final List<Map> items;
+  final List<Map> items, categories;
 
   List<Item> getByName(String name) => [
         ...items
@@ -13,6 +13,7 @@ class Catalog extends Equatable {
       ];
 
   List<Item> allItems() => [...items.map((e) => Item.fromJson(e))];
+  List<Map> categoryList() => categories;
 
   @override
   List<Object> get props => [items];

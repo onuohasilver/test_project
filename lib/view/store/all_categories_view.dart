@@ -27,7 +27,11 @@ class AllCategoriesView extends StatelessWidget {
                 scrollDirection: Axis.vertical,
                 mainAxisSpacing: 26.h,
                 childAspectRatio: (size.width * .4) / (size.height * .13),
-                children: [..._categories.map((e) => const CategoryCard())],
+                children: [
+                  ..._categories.map((e) => const CategoryCard(
+                        data: {'title': ''},
+                      ))
+                ],
               ),
             ),
           ],

@@ -3,7 +3,6 @@ import 'package:drotest/repository/store_repository.dart';
 import 'package:drotest/view/store/models/store_model.dart';
 import 'package:equatable/equatable.dart';
 
-
 part 'catalog_event.dart';
 part 'catalog_state.dart';
 
@@ -18,7 +17,8 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
     emit(CatalogLoading());
     try {
       final catalog = await shoppingRepository.loadCatalog();
-      emit(CatalogLoaded(Catalog(items: catalog)));
+      final categories = await shoppingRepository.loadCategories();
+      emit(CatalogLoaded(Catalog(items: catalog, categories: categories)));
     } catch (_) {
       emit(CatalogError());
     }
