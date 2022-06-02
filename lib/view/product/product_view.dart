@@ -1,5 +1,6 @@
 import 'package:drotest/utilities/utilities.dart';
 import 'package:drotest/view/cart/bloc/cart_bloc.dart';
+import 'package:drotest/view/cart/models/cart_item_model.dart';
 import 'package:drotest/view/product/bloc/counter_bloc.dart';
 import 'package:drotest/view/product/widget/widget.dart';
 import 'package:drotest/view/shared/custom_flat_button.dart';
@@ -119,12 +120,10 @@ class AddToCartButton extends StatelessWidget {
                 onTap: () {
                   if (state is CartLoaded) {
                     int quantity = context.read<CounterCubit>().state;
-
-                    context.read<CartBloc>().add(CartItemAdded(
-                        List.generate(quantity, (index) => widget.drug)));
-                    print(state.cart.items.length);
+                    context.read<CartBloc>().add(
+                        CartItemAdded(CartModelItem(quantity, widget.drug)));
                   }
-                  // showAddToCartModal(context);
+                  showAddToCartModal(context, widget.drug);
                 },
                 child: Builder(builder: (context) {
                   if (state is CartLoading) {

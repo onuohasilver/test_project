@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:drotest/utilities/mockdata.dart';
-import 'package:drotest/view/store/models/item_model.dart';
+import 'package:drotest/view/cart/models/cart_item_model.dart';
 
 const _delay = Duration(seconds: 4);
 
@@ -9,11 +9,11 @@ const List<Map> _catalog = [...MockData.drugs];
 const List<Map> _categories = [...MockData.categories];
 
 class StoreRepository {
-  final _items = <Item>[];
+  final _items = <CartModelItem>[];
 
   Future<List<Map>> loadCatalog() => Future.delayed(_delay, () => _catalog);
 
-  Future<List<Item>> loadCartItems() =>
+  Future<List<CartModelItem>> loadCartItems() =>
       Future.delayed(const Duration(milliseconds: 2), () => _items);
 
   Future<List<Map>> loadCategories() =>
@@ -26,15 +26,35 @@ class StoreRepository {
               element['Name'].toLowerCase().contains(keyWord.toLowerCase()))
           .toList());
 
-  void addItemToCart(List<Item> item) {
-    for (var element in item) {
-      _items.remove(element);
+  void addItemToCart(CartModelItem item) {
+    int index =
+        _items.indexWhere((element) => element.item.name == item.item.name);
+    if (index != -1) {
+      CartModelItem initialItem = _items[index];
+      _items[index] =
+          CartModelItem(initialItem.quantity + item.quantity, item.item);
+    } else {
+      _items.add(item);
     }
   }
 
-  void removeItemFromCart(List<Item> item) {
-    for (var element in item) {
-      _items.remove(element);
+  void removeItemFromCart(CartModelItem item) {
+    int index = _items.indexWhere(
+      (element) => element.item.name == item.item.name,
+    );
+    if (index != -1) {
+      _items.remove(_items[index]);
     }
   }
+
+  void updateItem(CartModelItem item) {
+    int index = _items.indexWhere(
+      (element) => element.item.name == item.item.name,
+    );
+    if (index != -1) {
+      _items[index] = item;
+    }
+  }
+
+  
 }

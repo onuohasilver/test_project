@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:drotest/repository/store_repository.dart';
+import 'package:drotest/view/cart/models/cart_item_model.dart';
 import 'package:drotest/view/cart/models/cart_model.dart';
-import 'package:drotest/view/store/models/item_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -12,6 +12,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc({required this.shoppingRepository}) : super(CartLoading()) {
     on<CartStarted>(_onStarted);
     on<CartItemAdded>(_onItemAdded);
+    on<CartItemUpdated>(_onItemUpdated);
     on<CartItemRemoved>(_onItemRemoved);
   }
 
@@ -21,6 +22,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     emit(CartLoading());
     try {
       final items = await shoppingRepository.loadCartItems();
+
       emit(CartLoaded(cart: Cart(items: [...items])));
     } catch (_) {
       emit(CartError());
@@ -32,28 +34,37 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     if (state is CartLoaded) {
       try {
         shoppingRepository.addItemToCart(event.item);
-        emit(CartLoaded(
-            cart: Cart(items: [...state.cart.items, ...event.item])));
+        final items = await shoppingRepository.loadCartItems();
+        emit(CartLoaded(cart: Cart(items: [...items])));
       } catch (_) {
         emit(CartError());
       }
     }
   }
 
-  void _onItemRemoved(CartItemRemoved event, Emitter<CartState> emit) {
+  void _onItemUpdated(CartItemUpdated event, Emitter<CartState> emit) async {
+    final state = this.state;
+    if (state is CartLoaded) {
+      try {
+        shoppingRepository.updateItem(event.item);
+        final items = await shoppingRepository.loadCartItems();
+        emit(CartLoaded(cart: Cart(items: [...items])));
+      } catch (_) {
+        emit(CartError());
+      }
+    }
+  }
+
+  void _onItemRemoved(CartItemRemoved event, Emitter<CartState> emit) async {
     final state = this.state;
     if (state is CartLoaded) {
       try {
         shoppingRepository.removeItemFromCart(event.item);
-        List<Item> newList = [...state.cart.items];
-        for (var element in event.item) {
-          newList.remove(element);
-        }
+        final items = await shoppingRepository.loadCartItems();
+
         emit(
           CartLoaded(
-            cart: Cart(
-              items: [...newList],
-            ),
+            cart: Cart(items: [...items]),
           ),
         );
       } catch (_) {

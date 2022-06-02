@@ -1,25 +1,18 @@
-import 'package:drotest/view/store/models/item_model.dart';
+import 'package:drotest/view/cart/models/cart_item_model.dart';
 import 'package:equatable/equatable.dart';
 
 class Cart extends Equatable {
-  const Cart({
-    this.items = const <Item>[],
-  });
+  const Cart({this.items = const <CartModelItem>[]});
 
-  final List<Item> items;
+  final List<CartModelItem> items;
 
   int get totalPrice {
-    return items.fold(0, (total, current) => total + current.price);
+    return items.fold(
+        0, (total, current) => total + current.item.price * current.quantity);
   }
 
-  int numberInCart(String name) {
-    return items.where((element) => element.name == name).length;
-  }
-
-  int totalPriceOfDrug(String name) {
-    return items
-        .where((element) => element.name == name)
-        .fold(0, (previousValue, element) => previousValue + element.price);
+  CartModelItem getByName(String name) {
+    return items.firstWhere((element) => element.item.name == name);
   }
 
   @override
