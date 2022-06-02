@@ -25,18 +25,11 @@ class TopBar extends StatefulWidget {
 }
 
 class _TopBarState extends State<TopBar> {
-  final _textController = TextEditingController();
-  late GithubSearchBloc _githubSearchBloc;
+  late CatalogSearchBloc _CatalogSearchBloc;
   @override
   void initState() {
-    _githubSearchBloc = context.read<GithubSearchBloc>();
+    _CatalogSearchBloc = context.read<CatalogSearchBloc>();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    super.dispose();
   }
 
   @override
@@ -73,9 +66,9 @@ class _TopBarState extends State<TopBar> {
                     height: 36.h,
                     width: 366.w,
                     child: TextField(
-                      controller: _textController,
+                      // controller: _textController,
                       onChanged: (text) {
-                        _githubSearchBloc.add(
+                        _CatalogSearchBloc.add(
                           TextChanged(text: text),
                         );
                       },

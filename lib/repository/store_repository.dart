@@ -30,9 +30,7 @@ class StoreRepository {
     int index =
         _items.indexWhere((element) => element.item.name == item.item.name);
     if (index != -1) {
-      CartModelItem initialItem = _items[index];
-      _items[index] =
-          CartModelItem(initialItem.quantity + item.quantity, item.item);
+      _items[index] = _items[index].add(item.quantity);
     } else {
       _items.add(item);
     }
@@ -55,6 +53,4 @@ class StoreRepository {
       _items[index] = item;
     }
   }
-
-  
 }

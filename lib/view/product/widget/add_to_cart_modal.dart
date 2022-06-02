@@ -45,9 +45,7 @@ Future showAddToCartModal(BuildContext context, Item item) {
                   Navigator.pop(context);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const CartView(),
-                    ),
+                    MaterialPageRoute(builder: (context) => const CartView()),
                   );
                 },
               ),

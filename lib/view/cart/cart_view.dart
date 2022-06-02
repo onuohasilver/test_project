@@ -1,7 +1,6 @@
 import 'package:drotest/utilities/utilities.dart';
 import 'package:drotest/view/cart/bloc/cart_bloc.dart';
 import 'package:drotest/view/cart/widgets/cart_item.dart';
-import 'package:drotest/view/product/widget/add_to_cart_modal.dart';
 import 'package:drotest/view/shared/custom_flat_button.dart';
 import 'package:drotest/view/shared/shared.dart';
 import 'package:flutter/material.dart';
@@ -59,12 +58,29 @@ class _CartViewState extends State<CartView> {
                       ),
                     ),
                   ),
-                  CustomFlatButton(
-                    child: const CustomText('Add to cart',
-                        color: Colors.white, size: 14, weight: FontWeight.bold),
-                    onTap: () {
-                      // showAddToCartModal(context,);
-                    },
+                  Container(
+                    height: 107.h,
+                    color: Colors.white,
+                    child: Row(
+                      children: [
+                        const CustomText('Total:', size: 18),
+                        const XSpace(9),
+                        CustomText('₦${state.cart.totalPrice}.00',
+                            size: 20, weight: FontWeight.bold),
+                        const Spacer(),
+                        CustomFlatButton(
+                            width: 157,
+                            onTap: () {},
+                            child: const Center(
+                              child: CustomText(
+                                'CHECKOUT',
+                                size: 15,
+                                color: Colors.white,
+                                weight: FontWeight.bold,
+                              ),
+                            ))
+                      ],
+                    ),
                   )
                 ],
               ),

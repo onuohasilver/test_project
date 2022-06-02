@@ -6,13 +6,13 @@ class CounterCubit extends Cubit<int> {
 
   /// Subtract 1 from the current state.
   void decrement() {
-    if (state > 0) {
-      emit(state - 1);
-    }
+    if (state > 0) emit(state - 1);
   }
 
   /// Add 1 to the current state.
-  void increment() => emit(state + 1);
+  void increment() {
+    if (state < 8) emit(state + 1);
+  }
 
   ///resets the counter to 1
   void reset() => emit(1);

@@ -17,11 +17,15 @@ class StoreView extends StatefulWidget {
 }
 
 class _StoreViewState extends State<StoreView> {
-  _setScrollingState(ScrollNotification scrollInfo) {
+  _setScrollingState(ScrollNotification scrollInfo) async {
     setState(() {
-      if (scrollInfo.metrics.pixels > 0.0) {
+      if (scrollInfo is ScrollStartNotification) {
         _switchFAB = true;
-      } else {
+      }
+      // if (scrollInfo is ScrollUpdateNotification) {
+      //   _switchFAB = true;
+      // }
+      if (scrollInfo is ScrollEndNotification) {
         _switchFAB = false;
       }
     });
@@ -31,13 +35,14 @@ class _StoreViewState extends State<StoreView> {
   final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GithubSearchBloc, GithubSearchState>(
+    return BlocBuilder<CatalogSearchBloc, CatalogSearchState>(
       builder: (context, state) {
         return Scaffold(
           appBar: PreferredSize(
               child: const TopBar(enableSearch: true, height: 171),
               preferredSize: Size(414.w, 171.h)),
           body: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: SizedBox(
               height: 800.h,
               child: Column(
@@ -55,12 +60,12 @@ class _StoreViewState extends State<StoreView> {
                       return state.items.isEmpty
                           ? NotFound(keyWord: state.keyword)
                           : Expanded(
-                              child: DrugCardLists(
+                              child: SearchDrugCardLists(
                                   scrollController: _scrollController,
                                   listOfDrugs: state.items));
                     }
                     return SizedBox(
-                      height: 700.h,
+                      height: 600.h,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [

@@ -1,18 +1,18 @@
 import 'package:drotest/view/store/models/item_model.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class GithubSearchState extends Equatable {
-  const GithubSearchState();
+abstract class CatalogSearchState extends Equatable {
+  const CatalogSearchState();
 
   @override
   List<Object> get props => [];
 }
 
-class SearchStateEmpty extends GithubSearchState {}
+class SearchStateEmpty extends CatalogSearchState {}
 
-class SearchStateLoading extends GithubSearchState {}
+class SearchStateLoading extends CatalogSearchState {}
 
-class SearchStateSuccess extends GithubSearchState {
+class SearchStateSuccess extends CatalogSearchState {
   const SearchStateSuccess(this.items, this.keyword);
 
   final List<Item> items;
@@ -25,7 +25,7 @@ class SearchStateSuccess extends GithubSearchState {
   String toString() => 'SearchStateSuccess { items: ${items.length} }';
 }
 
-class SearchStateError extends GithubSearchState {
+class SearchStateError extends CatalogSearchState {
   const SearchStateError(this.error);
 
   final String error;

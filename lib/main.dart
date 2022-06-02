@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
                       ..add(CatalogStarted())),
             BlocProvider(
                 create: (_) =>
-                    GithubSearchBloc(githubRepository: StoreRepository())),
+                    CatalogSearchBloc(githubRepository: StoreRepository())),
             BlocProvider(
                 create: (_) => CartBloc(shoppingRepository: StoreRepository())
                   ..add(CartStarted())),

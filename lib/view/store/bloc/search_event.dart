@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-abstract class GithubSearchEvent extends Equatable {
-  const GithubSearchEvent();
+abstract class CatalogSearchEvent extends Equatable {
+  const CatalogSearchEvent();
 }
 
-class TextChanged extends GithubSearchEvent {
+class TextChanged extends CatalogSearchEvent {
   const TextChanged({required this.text});
 
   final String text;
@@ -15,4 +15,3 @@ class TextChanged extends GithubSearchEvent {
   @override
   String toString() => 'TextChanged { text: $text }';
 }
-
