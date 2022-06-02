@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:drotest/utilities/mockdata.dart';
 import 'package:drotest/view/store/models/item_model.dart';
 
-const _delay = Duration(seconds: 5);
+const _delay = Duration(seconds: 4);
 
 const List<Map> _catalog = [...MockData.drugs];
 const List<Map> _categories = [...MockData.categories];
@@ -13,7 +13,8 @@ class StoreRepository {
 
   Future<List<Map>> loadCatalog() => Future.delayed(_delay, () => _catalog);
 
-  Future<List<Item>> loadCartItems() => Future.delayed(_delay, () => _items);
+  Future<List<Item>> loadCartItems() =>
+      Future.delayed(const Duration(milliseconds: 2), () => _items);
 
   Future<List<Map>> loadCategories() =>
       Future.delayed(_delay, () => _categories);
@@ -25,7 +26,15 @@ class StoreRepository {
               element['Name'].toLowerCase().contains(keyWord.toLowerCase()))
           .toList());
 
-  void addItemToCart(Item item) => _items.add(item);
+  void addItemToCart(List<Item> item) {
+    for (var element in item) {
+      _items.remove(element);
+    }
+  }
 
-  void removeItemFromCart(Item item) => _items.remove(item);
+  void removeItemFromCart(List<Item> item) {
+    for (var element in item) {
+      _items.remove(element);
+    }
+  }
 }

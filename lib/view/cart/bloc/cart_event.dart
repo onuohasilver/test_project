@@ -13,7 +13,7 @@ class CartStarted extends CartEvent {
 class CartItemAdded extends CartEvent {
   const CartItemAdded(this.item);
 
-  final Item item;
+  final List<Item> item;
 
   @override
   List<Object> get props => [item];
@@ -22,7 +22,7 @@ class CartItemAdded extends CartEvent {
 class CartItemRemoved extends CartEvent {
   const CartItemRemoved(this.item);
 
-  final Item item;
+  final List<Item> item;
 
   @override
   List<Object> get props => [item];

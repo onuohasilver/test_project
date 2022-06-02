@@ -1,5 +1,6 @@
 import 'package:drotest/utilities/utilities.dart';
 import 'package:drotest/view/cart/widgets/cart_item.dart';
+import 'package:drotest/view/product/widget/add_to_cart_modal.dart';
 import 'package:drotest/view/shared/custom_flat_button.dart';
 import 'package:drotest/view/shared/shared.dart';
 import 'package:flutter/material.dart';
@@ -45,9 +46,12 @@ class _CartViewState extends State<CartView> {
                   ),
                 ),
               ),
-              const CustomFlatButton(
-                child: CustomText('Add to cart',
+              CustomFlatButton(
+                child: const CustomText('Add to cart',
                     color: Colors.white, size: 14, weight: FontWeight.bold),
+                onTap: () {
+                  showAddToCartModal(context);
+                },
               )
             ],
           ),

@@ -1,5 +1,6 @@
 import 'package:drotest/utilities/utilities.dart';
-import 'package:drotest/view/cart/cart_view.dart';
+import 'package:drotest/view/cart/bloc/cart_bloc.dart';
+import 'package:drotest/view/product/bloc/counter_bloc.dart';
 import 'package:drotest/view/product/widget/widget.dart';
 import 'package:drotest/view/shared/custom_flat_button.dart';
 import 'package:drotest/view/shared/shared.dart';
@@ -48,7 +49,8 @@ class _ProductViewState extends State<ProductView> {
                       children: [
                         const SellerInformation(),
                         const YSpace(22),
-                        QuantityAndPriceSelector(amount: widget.drug.price),
+                        QuantityAndPriceSelector(
+                            amount: widget.drug.price, item: widget.drug),
                         const YSpace(34),
                         const ProductDetails(),
                         const YSpace(30),
@@ -87,38 +89,66 @@ class _ProductViewState extends State<ProductView> {
               ),
             ),
           ),
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                width: 414.w,
-                height: 95.h,
-                color: Colors.white,
-                child: Center(
-                  child: CustomFlatButton(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const CartView();
-                      }));
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(Icons.shopping_cart_outlined, color: Colors.white),
-                        XSpace(10),
-                        CustomText('Add to cart',
-                            color: Colors.white,
-                            size: 14,
-                            weight: FontWeight.bold),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          )
+          AddToCartButton(widget: widget)
         ],
+      ),
+    );
+  }
+}
+
+class AddToCartButton extends StatelessWidget {
+  const AddToCartButton({
+    Key? key,
+    required this.widget,
+  }) : super(key: key);
+
+  final ProductView widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          width: 414.w,
+          height: 95.h,
+          color: Colors.white,
+          child: Center(
+            child: BlocBuilder<CartBloc, CartState>(builder: (_, state) {
+              return CustomFlatButton(
+                onTap: () {
+                  if (state is CartLoaded) {
+                    int quantity = context.read<CounterCubit>().state;
+
+                    context.read<CartBloc>().add(CartItemAdded(
+                        List.generate(quantity, (index) => widget.drug)));
+                    print(state.cart.items.length);
+                  }
+                  // showAddToCartModal(context);
+                },
+                child: Builder(builder: (context) {
+                  if (state is CartLoading) {
+                    const CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    );
+                  }
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.shopping_cart_outlined, color: Colors.white),
+                      XSpace(10),
+                      CustomText('Add to cart',
+                          color: Colors.white,
+                          size: 14,
+                          weight: FontWeight.bold),
+                    ],
+                  );
+                }),
+              );
+            }),
+          ),
+        ),
       ),
     );
   }

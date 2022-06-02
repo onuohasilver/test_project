@@ -1,4 +1,6 @@
 import 'package:drotest/bloc/bloc_observer.dart';
+import 'package:drotest/view/cart/bloc/cart_bloc.dart';
+import 'package:drotest/view/product/bloc/counter_bloc.dart';
 import 'package:drotest/view/store/bloc/search_bloc.dart';
 import 'package:drotest/view/store/store_view.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +34,10 @@ class MyApp extends StatelessWidget {
             BlocProvider(
                 create: (_) =>
                     GithubSearchBloc(githubRepository: StoreRepository())),
+            BlocProvider(
+                create: (_) => CartBloc(shoppingRepository: StoreRepository())
+                  ..add(CartStarted())),
+            BlocProvider(create: (_) => CounterCubit()),
           ],
           child: MaterialApp(
             theme: ThemeData(fontFamily: 'Proxima', primarySwatch: Colors.blue),
