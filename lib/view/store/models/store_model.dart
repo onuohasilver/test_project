@@ -12,6 +12,12 @@ class Catalog extends Equatable {
             .map((e) => Item.fromJson(e))
       ];
 
+  List<Item> getByCategory(String category) => [
+        ...items
+            .where((element) => element['Category'] == category)
+            .map((e) => Item.fromJson(e))
+      ];
+
   List<Item> allItems() => [...items.map((e) => Item.fromJson(e))];
   List<Map> categoryList() => categories;
 

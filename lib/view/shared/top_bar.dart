@@ -1,6 +1,5 @@
 import 'package:drotest/utilities/utilities.dart';
-import 'package:drotest/view/store/bloc/search_bloc.dart';
-import 'package:drotest/view/store/bloc/search_event.dart';
+import 'package:drotest/view/store/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -1,14 +1,14 @@
 import 'package:drotest/bloc/bloc_observer.dart';
 import 'package:drotest/view/cart/bloc/cart_bloc.dart';
 import 'package:drotest/view/product/bloc/counter_bloc.dart';
-import 'package:drotest/view/store/bloc/search_bloc.dart';
+import 'package:drotest/view/store/bloc/bloc.dart';
+import 'package:drotest/view/store/bloc/category/category_bloc.dart';
 import 'package:drotest/view/store/store_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'repository/store_repository.dart';
-import 'view/store/bloc/catalog_bloc.dart';
 
 void main() async {
   BlocOverrides.runZoned(
@@ -37,6 +37,9 @@ class MyApp extends StatelessWidget {
             BlocProvider(
                 create: (_) => CartBloc(shoppingRepository: StoreRepository())
                   ..add(CartStarted())),
+            BlocProvider(
+                create: (_) =>
+                    CategoryBloc(githubRepository: StoreRepository())),
             BlocProvider(create: (_) => CounterCubit()),
           ],
           child: MaterialApp(

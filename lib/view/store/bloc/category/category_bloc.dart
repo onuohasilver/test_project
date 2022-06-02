@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:drotest/repository/store_repository.dart';
-import 'package:drotest/view/store/bloc/search_event.dart';
-import 'package:drotest/view/store/bloc/search_state.dart';
+import 'package:drotest/view/store/bloc/category/category_event.dart';
+import 'package:drotest/view/store/bloc/category/category_state.dart';
 import 'package:drotest/view/store/models/item_model.dart';
 import 'package:stream_transform/stream_transform.dart';
 
@@ -11,9 +11,9 @@ EventTransformer<Event> debounce<Event>(Duration duration) {
   return (events, mapper) => events.debounce(duration).switchMap(mapper);
 }
 
-class CatalogSearchBloc extends Bloc<CatalogSearchEvent, CatalogSearchState> {
-  CatalogSearchBloc({required this.githubRepository})
-      : super(SearchStateEmpty()) {
+class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
+  CategoryBloc({required this.githubRepository})
+      : super(CategoryStateEmpty()) {
     on<TextChanged>(_onTextChanged, transformer: debounce(_duration));
   }
 
@@ -21,20 +21,20 @@ class CatalogSearchBloc extends Bloc<CatalogSearchEvent, CatalogSearchState> {
 
   void _onTextChanged(
     TextChanged event,
-    Emitter<CatalogSearchState> emit,
+    Emitter<CategoryState> emit,
   ) async {
     final searchTerm = event.text;
 
-    if (searchTerm.isEmpty) return emit(SearchStateEmpty());
+    if (searchTerm.isEmpty) return emit(CategoryStateEmpty());
 
-    emit(SearchStateLoading());
+    emit(CategoryStateLoading());
 
     try {
-      final results = await githubRepository.search(searchTerm);
-      emit(SearchStateSuccess(
+      final results = await githubRepository.getCategory(searchTerm);
+      emit(CategoryStateSuccess(
           results.map((e) => Item.fromJson(e)).toList(), searchTerm));
     } catch (error) {
-      emit(const SearchStateError('something went wrong'));
+      emit(const CategoryStateError('something went wrong'));
     }
   }
 }

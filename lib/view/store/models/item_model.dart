@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Item extends Equatable {
-  final String name, type, imageUrl;
+  final String name, type, imageUrl, category;
 
   final int price;
 
@@ -10,12 +10,14 @@ class Item extends Equatable {
         imageUrl: json['ImageUrl'],
         price: json['Price'],
         name: json['Name'],
+        category: json['Category'],
         type: json['Type']);
   }
 
   const Item(
       {required this.name,
       required this.type,
+      required this.category,
       required this.imageUrl,
       required this.price});
 

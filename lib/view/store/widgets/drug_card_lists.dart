@@ -6,13 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DrugCardLists extends StatelessWidget {
   const DrugCardLists(
-      {Key? key,
-      required ScrollController scrollController,
-      required this.listOfDrugs})
-      : _scrollController = scrollController,
-        super(key: key);
+      {Key? key, this.scrollController, required this.listOfDrugs}):super(key:key);
 
-  final ScrollController _scrollController;
+  final ScrollController? scrollController;
 
   final List<Item> listOfDrugs;
   @override
@@ -22,7 +18,7 @@ class DrugCardLists extends StatelessWidget {
       width: 444.w,
       padding: const EdgeInsets.symmetric(horizontal: 23),
       child: GridView.builder(
-        controller: _scrollController,
+        controller: scrollController,
         physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

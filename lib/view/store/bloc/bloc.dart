@@ -1,1 +1,3 @@
-export 'catalog_bloc.dart';
+export 'catalog/catalog.dart';
+
+export 'search/search.dart';
