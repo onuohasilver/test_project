@@ -29,13 +29,29 @@ class _StoreViewState extends State<StoreView> {
 
   bool _switchFAB = true;
   final ScrollController _scrollController = ScrollController();
+  final TextEditingController _textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CatalogSearchBloc, CatalogSearchState>(
       builder: (context, state) {
         return Scaffold(
           appBar: PreferredSize(
-              child: const TopBar(enableSearch: true, height: 171),
+              child: TopBar(
+                enableSearch: true,
+                textController: _textController,
+                height: 171,
+                icon: 'pharmacy.svg',
+                title: const CustomText('Pharmacy',
+                    size: 22, color: Colors.white, weight: FontWeight.bold),
+                leadingTap: (state is SearchStateEmpty)
+                    ? null
+                    : () {
+                        _textController.clear();
+                        context
+                            .read<CatalogSearchBloc>()
+                            .add(const TextChanged(text: ''));
+                      },
+              ),
               preferredSize: Size(414.w, 171.h)),
           body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -69,11 +85,7 @@ class _StoreViewState extends State<StoreView> {
                             title: 'CATEGORIES',
                             buttonText: 'VIEW ALL',
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const AllCategoriesView()));
+                              navigateTo(context, const AllCategoriesView());
                             },
                           ),
                           const CategoryCardList(),
@@ -96,9 +108,8 @@ class _StoreViewState extends State<StoreView> {
                                 }
                                 if (state is CatalogLoaded) {
                                   return DrugCardLists(
-                                    scrollController: _scrollController,
-                                    listOfDrugs: state.catalog.allItems(),
-                                  );
+                                      scrollController: _scrollController,
+                                      listOfDrugs: state.catalog.allItems());
                                 }
                                 return const NotFound();
                               }),

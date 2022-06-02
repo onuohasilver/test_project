@@ -20,10 +20,7 @@ class DrugCard extends StatelessWidget {
           boxShadow: [BoxShadow(color: Colors.grey.withOpacity(.3))]),
       child: CustomTapDetector(
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: ((context) => ProductView(drug: drug))));
+          navigateTo(context, ProductView(drug: drug));
         },
         radius: 10,
         child: Column(

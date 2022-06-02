@@ -28,13 +28,17 @@ class _CategoryViewState extends State<CategoryView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-          child: const TopBar(
-            title: CustomText(
+          child: TopBar(
+            title: const CustomText(
               'Categories',
               size: 22,
               color: Colors.white,
               weight: FontWeight.bold,
             ),
+            icon: 'delivery.svg',
+            leadingTap: () {
+              Navigator.pop(context);
+            },
           ),
           preferredSize: Size(414.w, 171.h)),
       body: Column(children: [

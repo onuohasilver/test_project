@@ -1,7 +1,6 @@
 import 'package:drotest/utilities/utilities.dart';
 import 'package:drotest/view/cart/bloc/cart_bloc.dart';
 import 'package:drotest/view/cart/widgets/cart_item.dart';
-import 'package:drotest/view/shared/custom_flat_button.dart';
 import 'package:drotest/view/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,13 +18,12 @@ class _CartViewState extends State<CartView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-          child: const TopBar(
-            title: CustomText(
-              'Cart',
-              size: 22,
-              color: Colors.white,
-              weight: FontWeight.bold,
-            ),
+          child: TopBar(
+            title: const CustomText('Cart',
+                size: 22, color: Colors.white, weight: FontWeight.bold),
+            leadingTap: () {
+              Navigator.pop(context);
+            },
           ),
           preferredSize: Size(414.w, 171.h)),
       body: BlocBuilder<CartBloc, CartState>(builder: (context, state) {

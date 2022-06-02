@@ -1,6 +1,7 @@
 import 'package:drotest/utilities/utilities.dart';
 import 'package:drotest/view/cart/bloc/cart_bloc.dart';
 import 'package:drotest/view/cart/models/cart_item_model.dart';
+import 'package:drotest/view/product/product_view.dart';
 import 'package:drotest/view/product/widget/widget.dart';
 import 'package:drotest/view/shared/shared.dart';
 import 'package:drotest/view/store/models/item_model.dart';
@@ -27,7 +28,9 @@ class ExtendedDrugCard extends StatelessWidget {
                 color: Colors.white,
                 boxShadow: [BoxShadow(color: Colors.grey.withOpacity(.3))]),
             child: CustomTapDetector(
-              onTap: () {},
+              onTap: () {
+                navigateTo(context, ProductView(drug: drug));
+              },
               radius: 10,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

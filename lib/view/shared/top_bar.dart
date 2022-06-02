@@ -1,4 +1,5 @@
 import 'package:drotest/utilities/utilities.dart';
+import 'package:drotest/view/shared/shared.dart';
 import 'package:drotest/view/store/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,13 +12,19 @@ class TopBar extends StatefulWidget {
       this.enableSearch = false,
       this.height = 120,
       this.title = const SizedBox(),
-      this.onChanged})
+      this.onChanged,
+      this.leadingTap,
+      this.icon = 'heart.svg',
+      this.textController})
       : super(key: key);
 
   final bool enableSearch;
   final double height;
+  final String icon;
   final Widget title;
   final Function(String)? onChanged;
+  final Function()? leadingTap;
+  final TextEditingController? textController;
 
   @override
   State<TopBar> createState() => _TopBarState();
@@ -25,6 +32,7 @@ class TopBar extends StatefulWidget {
 
 class _TopBarState extends State<TopBar> {
   late CatalogSearchBloc _CatalogSearchBloc;
+
   @override
   void initState() {
     _CatalogSearchBloc = context.read<CatalogSearchBloc>();
@@ -34,6 +42,7 @@ class _TopBarState extends State<TopBar> {
   @override
   Widget build(BuildContext context) {
     SizeReference size = SizeReference(context);
+
     return Container(
       height: widget.height.h,
       width: 414.w,
@@ -52,40 +61,22 @@ class _TopBarState extends State<TopBar> {
                 const YSpace(66),
                 Row(
                   children: [
+                    Visibility(
+                      visible: widget.leadingTap != null,
+                      child: GestureDetector(
+                          child: SvgPicture.asset('assets/Union.svg',
+                              height: 25.w, width: 22.w, color: Colors.white),
+                          onTap: widget.leadingTap),
+                    ),
+                    const XSpace(20),
                     widget.title,
                     const Spacer(),
-                    SvgPicture.asset('assets/heart.svg',
+                    SvgPicture.asset('assets/${widget.icon}',
                         height: 25.w, width: 22.w, color: Colors.white)
                   ],
                 ),
-                const YSpace(21),
-                Visibility(
-                  visible: widget.enableSearch,
-                  child: SizedBox(
-                    height: 36.h,
-                    width: 366.w,
-                    child: TextField(
-                      // controller: _textController,
-                      onChanged: (text) {
-                        _CatalogSearchBloc.add(
-                          TextChanged(text: text),
-                        );
-                      },
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.zero,
-                          prefixIcon: const Icon(Icons.search,
-                              color: Colors.white, size: 15),
-                          fillColor: Colors.white24,
-                          filled: true,
-                          hintText: 'Search',
-                          hintStyle: const TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(10))),
-                    ),
-                  ),
-                )
+                const YSpace(16),
+                SearchBar(CatalogSearchBloc: _CatalogSearchBloc, widget: widget)
               ],
             ),
           ),

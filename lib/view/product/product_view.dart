@@ -3,7 +3,6 @@ import 'package:drotest/view/cart/bloc/cart_bloc.dart';
 import 'package:drotest/view/cart/models/cart_item_model.dart';
 import 'package:drotest/view/product/bloc/counter_bloc.dart';
 import 'package:drotest/view/product/widget/widget.dart';
-import 'package:drotest/view/shared/custom_flat_button.dart';
 import 'package:drotest/view/shared/shared.dart';
 import 'package:drotest/view/store/bloc/bloc.dart';
 import 'package:drotest/view/store/models/item_model.dart';
@@ -25,7 +24,19 @@ class _ProductViewState extends State<ProductView> {
     SizeReference size = SizeReference(context);
     return Scaffold(
       appBar: PreferredSize(
-          child: const TopBar(), preferredSize: Size(414.w, 171.h)),
+          child: TopBar(
+            icon: 'delivery.svg',
+            title: const CustomText(
+              'Pharmacy',
+              size: 22,
+              color: Colors.white,
+              weight: FontWeight.bold,
+            ),
+            leadingTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          preferredSize: Size(414.w, 171.h)),
       body: Stack(
         children: [
           SingleChildScrollView(
