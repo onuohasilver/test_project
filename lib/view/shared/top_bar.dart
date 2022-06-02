@@ -1,24 +1,49 @@
 import 'package:drotest/utilities/utilities.dart';
+import 'package:drotest/view/store/bloc/search_bloc.dart';
+import 'package:drotest/view/store/bloc/search_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class TopBar extends StatelessWidget {
+class TopBar extends StatefulWidget {
   const TopBar(
       {Key? key,
       this.enableSearch = false,
       this.height = 120,
-      this.title = const SizedBox()})
+      this.title = const SizedBox(),
+      this.onChanged})
       : super(key: key);
 
   final bool enableSearch;
   final double height;
   final Widget title;
+  final Function(String)? onChanged;
+
+  @override
+  State<TopBar> createState() => _TopBarState();
+}
+
+class _TopBarState extends State<TopBar> {
+  final _textController = TextEditingController();
+  late GithubSearchBloc _githubSearchBloc;
+  @override
+  void initState() {
+    _githubSearchBloc = context.read<GithubSearchBloc>();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeReference size = SizeReference(context);
     return Container(
-      height: height.h,
+      height: widget.height.h,
       width: 414.w,
       decoration: const BoxDecoration(
           gradient: DroColors.purpleGradient,
@@ -35,7 +60,7 @@ class TopBar extends StatelessWidget {
                 const YSpace(66),
                 Row(
                   children: [
-                    title,
+                    widget.title,
                     const Spacer(),
                     SvgPicture.asset('assets/heart.svg',
                         height: 25.w, width: 22.w, color: Colors.white)
@@ -43,11 +68,17 @@ class TopBar extends StatelessWidget {
                 ),
                 const YSpace(21),
                 Visibility(
-                  visible: enableSearch,
+                  visible: widget.enableSearch,
                   child: SizedBox(
                     height: 36.h,
                     width: 366.w,
                     child: TextField(
+                      controller: _textController,
+                      onChanged: (text) {
+                        _githubSearchBloc.add(
+                          TextChanged(text: text),
+                        );
+                      },
                       decoration: InputDecoration(
                           contentPadding: EdgeInsets.zero,
                           prefixIcon: const Icon(Icons.search,

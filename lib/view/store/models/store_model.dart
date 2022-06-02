@@ -2,7 +2,7 @@ import 'package:drotest/view/store/models/item_model.dart';
 import 'package:equatable/equatable.dart';
 
 class Catalog extends Equatable {
-  const Catalog({required this.items, required this.categories});
+  const Catalog({required this.items, this.categories = const []});
 
   final List<Map> items, categories;
 

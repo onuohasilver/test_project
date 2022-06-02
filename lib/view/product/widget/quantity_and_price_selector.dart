@@ -47,7 +47,7 @@ class _QuantityAndPriceSelectorState extends State<QuantityAndPriceSelector> {
           color: Colors.grey,
         ),
         const Spacer(),
-        const FloatingDrugPrice(amount: 600),
+        FloatingDrugPrice(amount: widget.amount),
       ],
     );
   }

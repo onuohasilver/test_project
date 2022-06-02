@@ -1,4 +1,5 @@
 import 'package:drotest/bloc/bloc_observer.dart';
+import 'package:drotest/view/store/bloc/search_bloc.dart';
 import 'package:drotest/view/store/store_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,17 +23,20 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(414, 896),
       builder: ((context, child) {
-        return MaterialApp(
-          home: MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                  create: (_) =>
-                      CatalogBloc(shoppingRepository: StoreRepository())
-                        ..add(CatalogStarted())),
-            ],
-            child: const StoreView(),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+                create: (_) =>
+                    CatalogBloc(shoppingRepository: StoreRepository())
+                      ..add(CatalogStarted())),
+            BlocProvider(
+                create: (_) =>
+                    GithubSearchBloc(githubRepository: StoreRepository())),
+          ],
+          child: MaterialApp(
+            theme: ThemeData(fontFamily: 'Proxima', primarySwatch: Colors.blue),
+            home: const StoreView(),
           ),
-          theme: ThemeData(fontFamily: 'Proxima', primarySwatch: Colors.blue),
         );
       }),
     );

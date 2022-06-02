@@ -18,6 +18,13 @@ class StoreRepository {
   Future<List<Map>> loadCategories() =>
       Future.delayed(_delay, () => _categories);
 
+  Future<List<Map>> search(String keyWord) => Future.delayed(
+      _delay,
+      () => _catalog
+          .where((element) =>
+              element['Name'].toLowerCase().contains(keyWord.toLowerCase()))
+          .toList());
+
   void addItemToCart(Item item) => _items.add(item);
 
   void removeItemFromCart(Item item) => _items.remove(item);

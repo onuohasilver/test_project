@@ -12,10 +12,10 @@ class FloatingDrugPrice extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        CustomText('₦', size: 14),
-        CustomText('600', size: 32),
-        CustomText('.00', size: 18)
+      children: [
+        const CustomText('₦', size: 14),
+        CustomText('$amount', size: 32),
+        const CustomText('.00', size: 18)
       ],
     );
   }

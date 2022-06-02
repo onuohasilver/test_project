@@ -18,4 +18,15 @@ class CatalogLoaded extends CatalogState {
   List<Object> get props => [catalog];
 }
 
+class CatalogSearching extends CatalogState {}
+
+class CatalogSearchResults extends CatalogState {
+  const CatalogSearchResults(this.catalog);
+
+  final Catalog catalog;
+
+  @override
+  List<Object> get props => [catalog];
+}
+
 class CatalogError extends CatalogState {}

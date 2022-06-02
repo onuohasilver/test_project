@@ -3,14 +3,18 @@ import 'package:drotest/view/cart/cart_view.dart';
 import 'package:drotest/view/product/widget/widget.dart';
 import 'package:drotest/view/shared/custom_flat_button.dart';
 import 'package:drotest/view/shared/shared.dart';
+import 'package:drotest/view/store/bloc/bloc.dart';
+import 'package:drotest/view/store/models/item_model.dart';
+import 'package:drotest/view/store/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductView extends StatefulWidget {
-  const ProductView({Key? key}) : super(key: key);
-
+  const ProductView({Key? key, required this.drug}) : super(key: key);
   @override
   State<ProductView> createState() => _ProductViewState();
+  final Item drug;
 }
 
 class _ProductViewState extends State<ProductView> {
@@ -29,48 +33,54 @@ class _ProductViewState extends State<ProductView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset('assets/medicine1.png',
+                  Image.asset(widget.drug.imageUrl,
                       height: 170.h, width: 170.h),
                   const YSpace(13),
-                  const CustomText('Emzor Paracetamol',
+                  CustomText(widget.drug.name,
                       size: 20, weight: FontWeight.w700),
                   const YSpace(8),
-                  const CustomText('Tablet - 500mg',
-                      size: 18, color: Colors.grey),
+                  CustomText(widget.drug.type, size: 18, color: Colors.grey),
                   const YSpace(43),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 35.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        SellerInformation(),
-                        YSpace(22),
-                        QuantityAndPriceSelector(amount: 200),
-                        YSpace(34),
-                        ProductDetails(),
-                        YSpace(30),
-                        CustomText('Similar Products',
+                      children: [
+                        const SellerInformation(),
+                        const YSpace(22),
+                        QuantityAndPriceSelector(amount: widget.drug.price),
+                        const YSpace(34),
+                        const ProductDetails(),
+                        const YSpace(30),
+                        const CustomText('Similar Products',
                             size: 18, align: TextAlign.left),
                       ],
                     ),
                   ),
                   const YSpace(17),
                   Flexible(
-                    child: ListView.builder(
-                      padding: EdgeInsets.only(left: 24.w),
-                      itemCount: 3,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: SizedBox(
-                            height: 206.h,
-                            width: 155.w,
-                            // child: const DrugCard(),
-                          ),
+                    child: BlocBuilder<CatalogBloc, CatalogState>(
+                        builder: (context, state) {
+                      if (state is CatalogLoaded) {
+                        return ListView.builder(
+                          padding: EdgeInsets.only(left: 24.w),
+                          itemCount: 4,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: SizedBox(
+                                height: 206.h,
+                                width: 155.w,
+                                child: DrugCard(
+                                    drug: state.catalog.allItems()[index]),
+                              ),
+                            );
+                          },
                         );
-                      },
-                    ),
+                      }
+                      return const CustomText('An Error Occured', size: 15);
+                    }),
                   ),
                   const YSpace(10)
                 ],
