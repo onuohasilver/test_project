@@ -2,7 +2,6 @@ import 'package:drotest/utilities/utilities.dart';
 import 'package:drotest/view/shared/shared.dart';
 import 'package:drotest/view/store/all_categories_view.dart';
 import 'package:drotest/view/store/bloc/category/category_bloc.dart';
-import 'package:drotest/view/store/bloc/category/category_event.dart';
 import 'package:drotest/view/store/bloc/category/category_state.dart';
 import 'package:drotest/view/store/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -49,13 +48,8 @@ class _CategoryViewState extends State<CategoryView> {
                     builder: (context) => const AllCategoriesView()));
           },
         ),
-        TextButton(
-            onPressed: () {
-              _CategoryBloc.add(const TextChanged(text: 'Headache'));
-            },
-            child: const Text('sasa')),
+        const CategoryCardListSelector(),
         const YSpace(30),
-        SectionHeader(title: widget.category.toUpperCase()),
         Expanded(
           flex: 5,
           child: BlocBuilder<CategoryBloc, CategoryState>(
@@ -66,7 +60,12 @@ class _CategoryViewState extends State<CategoryView> {
                       strokeWidth: 2, color: DroColors.purple));
             }
             if (state is CategoryStateSuccess) {
-              return DrugCardLists(listOfDrugs: state.items);
+              return Column(
+                children: [
+                  SectionHeader(title: state.keyword),
+                  DrugCardLists(listOfDrugs: state.items),
+                ],
+              );
             }
             return const NotFound();
           }),

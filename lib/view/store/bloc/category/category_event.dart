@@ -4,8 +4,8 @@ abstract class CategoryEvent extends Equatable {
   const CategoryEvent();
 }
 
-class TextChanged extends CategoryEvent {
-  const TextChanged({required this.text});
+class CategoryChanged extends CategoryEvent {
+  const CategoryChanged({required this.text});
 
   final String text;
 

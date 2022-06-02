@@ -7,7 +7,7 @@ class CategoryCard extends StatelessWidget {
   const CategoryCard({Key? key, required this.data, this.onTap})
       : super(key: key);
   final Map data;
-  final Function? onTap;
+  final Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,15 +37,8 @@ class CategoryCard extends StatelessWidget {
                         weight: FontWeight.bold,
                       ),
                     ),
-                    onTap: () {
-                      onTap ??
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return CategoryView(
-                              category: data['title'],
-                            );
-                          }));
-                    }),
+                    onTap: onTap 
+                        ),
               )
             ],
           ),

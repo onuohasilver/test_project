@@ -6,7 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DrugCardLists extends StatelessWidget {
   const DrugCardLists(
-      {Key? key, this.scrollController, required this.listOfDrugs}):super(key:key);
+      {Key? key, this.scrollController, required this.listOfDrugs})
+      : super(key: key);
 
   final ScrollController? scrollController;
 
@@ -30,7 +31,9 @@ class DrugCardLists extends StatelessWidget {
         itemCount: listOfDrugs.length,
         scrollDirection: Axis.vertical,
         itemBuilder: (BuildContext context, int index) {
-          return DrugCard(drug: listOfDrugs[index]);
+          return DrugCard(
+            drug: listOfDrugs[index],
+          );
         },
       ),
     );
@@ -66,7 +69,9 @@ class SearchDrugCardLists extends StatelessWidget {
         itemCount: listOfDrugs.length,
         scrollDirection: Axis.vertical,
         itemBuilder: (BuildContext context, int index) {
-          return ExtendedDrugCard(drug: listOfDrugs[index]);
+          return ExtendedDrugCard(
+            drug: listOfDrugs[index],
+          );
         },
       ),
     );

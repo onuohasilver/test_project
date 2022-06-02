@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class DrugCard extends StatelessWidget {
   const DrugCard({Key? key, required this.drug}) : super(key: key);
   final Item drug;
+
   @override
   Widget build(BuildContext context) {
     return Container(

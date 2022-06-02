@@ -12,15 +12,14 @@ EventTransformer<Event> debounce<Event>(Duration duration) {
 }
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
-  CategoryBloc({required this.githubRepository})
-      : super(CategoryStateEmpty()) {
-    on<TextChanged>(_onTextChanged, transformer: debounce(_duration));
+  CategoryBloc({required this.githubRepository}) : super(CategoryStateEmpty()) {
+    on<CategoryChanged>(_onTextChanged, transformer: debounce(_duration));
   }
 
   final StoreRepository githubRepository;
 
   void _onTextChanged(
-    TextChanged event,
+    CategoryChanged event,
     Emitter<CategoryState> emit,
   ) async {
     final searchTerm = event.text;

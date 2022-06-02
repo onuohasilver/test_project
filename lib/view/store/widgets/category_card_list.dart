@@ -1,6 +1,9 @@
 import 'package:drotest/utilities/utilities.dart';
 import 'package:drotest/view/shared/custom_text.dart';
 import 'package:drotest/view/store/bloc/bloc.dart';
+import 'package:drotest/view/store/bloc/category/category_bloc.dart';
+import 'package:drotest/view/store/bloc/category/category_event.dart';
+import 'package:drotest/view/store/category_view.dart';
 import 'package:drotest/view/store/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +33,16 @@ class CategoryCardList extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 return CategoryCard(
                   data: state.catalog.categories[index],
+                  onTap: () {
+                    context.read<CategoryBloc>().add(CategoryChanged(
+                        text: state.catalog.categories[index]['title']));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return CategoryView(
+                        category: state.catalog.categories[index]['title'],
+                      );
+                    }));
+                  },
                 );
               },
             ),
@@ -44,9 +57,7 @@ class CategoryCardList extends StatelessWidget {
 class CategoryCardListSelector extends StatelessWidget {
   const CategoryCardListSelector({
     Key? key,
-    this.onTap,
   }) : super(key: key);
-  final Function? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +78,11 @@ class CategoryCardListSelector extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 return CategoryCard(
                   data: state.catalog.categories[index],
-                  onTap: onTap,
+                  onTap: () {
+                    print('234asdaasd' * 1212);
+                    context.read<CategoryBloc>().add(CategoryChanged(
+                        text: state.catalog.categories[index]['title']));
+                  },
                 );
               },
             ),
